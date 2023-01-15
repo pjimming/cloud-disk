@@ -2,7 +2,7 @@ package test
 
 import (
 	"bytes"
-	"cloud-disk/models"
+	"cloud-disk/core/models"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -14,7 +14,7 @@ import (
 
 func TestXormTest(t *testing.T) {
 	// 使用Engine引擎，建立mysql连接。
-	engine, err := xorm.NewEngine("mysql", "root:123456@tcp(127.0.0.1)/cloud_disk?charset=utf8mb4&parseTime=True&loc=Local")
+	engine, err := xorm.NewEngine("mysql", "root:123456@tcp(127.0.0.1:3306)/cloud_disk?charset=utf8mb4&parseTime=True&loc=Local")
 	if err != nil {
 		t.Fatal(err)
 	}
