@@ -6,6 +6,10 @@ service core-api {
 	// 用户详情
 	@handler UserDetail
 	post /user/detail(UserDetailRequest) returns (UserDetailReply)
+	
+	// 验证码发送
+	@handler MailCodeSend
+	post /mail/code/send(MailCodeSendRequest) returns (MailCodeSendReply)
 }
 
 type UserLoginRequest {
@@ -25,3 +29,9 @@ type UserDetailReply {
 	Name  string `json:"name"`
 	Email string `json:"email"`
 }
+
+type MailCodeSendRequest {
+	Email string `json:"email"`
+}
+
+type MailCodeSendReply {}

@@ -28,4 +28,9 @@ go run core.go -f etc/core-api.yaml
 
 # 使用api文件生成代码
 goctl api go -api core.api -dir . -style go_zero
+
+# 安装 Email 库
+go get github.com/jordan-wright/email
 ```
+
+[电子邮件库](https://github.com/jordan-wright/email)
