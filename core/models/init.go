@@ -1,6 +1,7 @@
 package models
 
 import (
+	"cloud-disk/core/internal/config"
 	"log"
 
 	"github.com/go-redis/redis/v8"
@@ -8,11 +9,8 @@ import (
 	"xorm.io/xorm"
 )
 
-var Engine = InitEngine()
-var RDB = InitRedis()
-
-func InitEngine() *xorm.Engine {
-	engine, err := xorm.NewEngine("mysql", "root:123456@tcp(127.0.0.1:3306)/cloud_disk?charset=utf8mb4&parseTime=True&loc=Local")
+func InitEngine(c config.Config) *xorm.Engine {
+	engine, err := xorm.NewEngine("mysql", c.Mysql.DataSource)
 	if err != nil {
 		log.Printf("Xorm New Engine Error:%v", err)
 		return nil
@@ -20,9 +18,9 @@ func InitEngine() *xorm.Engine {
 	return engine
 }
 
-func InitRedis() *redis.Client {
+func InitRedis(c config.Config) *redis.Client {
 	return redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     c.Redis.Addr,
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
