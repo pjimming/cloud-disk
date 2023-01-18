@@ -12,6 +12,14 @@ require (
 require github.com/satori/go.uuid v1.2.0
 
 require (
+	github.com/clbanning/mxj v1.8.4 // indirect
+	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/mitchellh/mapstructure v1.5.0 // indirect
+	github.com/mozillazg/go-httpheader v0.3.1 // indirect
+	github.com/tencentyun/cos-go-sdk-v5 v0.7.41 // indirect
+)
+
+require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect

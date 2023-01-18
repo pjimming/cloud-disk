@@ -37,6 +37,9 @@ go get github.com/go-redis/redis/v8
 
 # 安装 Go-uuid 库
 go get github.com/satori/go.uuid
+
+# 安装 COS Go SDK
+go get -u github.com/tencentyun/cos-go-sdk-v5
 ```
 
 ### 需要用到的库
@@ -50,3 +53,11 @@ go get github.com/satori/go.uuid
 ### 教程
 
 [Windows 下安装 Redis](https://redis.com.cn/redis-installation.html)
+
+### 腾讯云 COS
+
+[腾讯云 COS 后台地址](https://console.cloud.tencent.com/cos/bucket)
+
+[腾讯云 COS 帮助文档](https://cloud.tencent.com/document/product/436/31215)
+
+**注意：修改环境变量后需要重启电脑！**
