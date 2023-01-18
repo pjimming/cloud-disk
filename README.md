@@ -31,6 +31,22 @@ goctl api go -api core.api -dir . -style go_zero
 
 # 安装 Email 库
 go get github.com/jordan-wright/email
+
+# 安装 Redis 库
+go get github.com/go-redis/redis/v8
+
+# 安装 Go-uuid 库
+go get github.com/satori/go.uuid
 ```
 
+### 需要用到的库
+
 [电子邮件库](https://github.com/jordan-wright/email)
+
+[Go-Redis 库](https://github.com/go-redis/redis)
+
+[Gouuid 库](https://github.com/satori/go.uuid)
+
+### 教程
+
+[Windows 下安装 Redis](https://redis.com.cn/redis-installation.html)

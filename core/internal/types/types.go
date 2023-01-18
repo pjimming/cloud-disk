@@ -19,9 +19,19 @@ type UserDetailReply struct {
 	Email string `json:"email"`
 }
 
-type MailCodeSendRequest struct {
+type MailCodeSendRegisterRequest struct {
 	Email string `json:"email"`
 }
 
-type MailCodeSendReply struct {
+type MailCodeSendRegisterReply struct {
+}
+
+type UserRegisterRequest struct {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+	Email    string `json:"email"`
+	Code     string `json:"code"`
+}
+
+type UserRegisterReply struct {
 }

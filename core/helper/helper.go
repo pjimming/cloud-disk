@@ -5,10 +5,13 @@ import (
 	"crypto/md5"
 	"crypto/tls"
 	"fmt"
+	"math/rand"
 	"net/smtp"
+	"time"
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/jordan-wright/email"
+	uuid "github.com/satori/go.uuid"
 )
 
 // Md5
@@ -39,7 +42,7 @@ func GenerateToken(id int, identity, name string) (string, error) {
 func MailCodeSend(mail, code string) error {
 	e := email.NewEmail()
 	e.From = "Jimmy Cloud-Disk <panjm2001@126.com>"
-	e.To = []string{"2556323541@qq.com"}
+	e.To = []string{mail}
 	e.Subject = "Jimmy Cloud-Disk验证码发送测试"
 	e.HTML = []byte("您的验证码为：<h1>" + code + "</h1>")
 	err := e.SendWithTLS("smtp.126.com:465", smtp.PlainAuth("", "panjm2001@126.com", define.MailPassword, "smtp.126.com"),
@@ -48,4 +51,22 @@ func MailCodeSend(mail, code string) error {
 		return err
 	}
 	return nil
+}
+
+// RandCode
+// 生成随机验证码
+func RandCode() string {
+	s := "1234567890"
+	code := ""
+	rand.Seed(time.Now().UnixNano())
+	for i := 0; i < define.CodeLength; i++ {
+		code += string(s[rand.Intn(len(s))])
+	}
+	return code
+}
+
+// UUID
+// 生成UUID
+func UUID() string {
+	return uuid.NewV4().String()
 }

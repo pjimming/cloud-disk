@@ -7,11 +7,18 @@ service core-api {
 	@handler UserDetail
 	post /user/detail(UserDetailRequest) returns (UserDetailReply)
 	
-	// 验证码发送
-	@handler MailCodeSend
-	post /mail/code/send(MailCodeSendRequest) returns (MailCodeSendReply)
+	// 注册验证码发送
+	@handler MailCodeSendRegister
+	post /mail/code/send/register(MailCodeSendRegisterRequest) returns (MailCodeSendRegisterReply)
+	
+	// 用户注册
+	@handler UserRegister
+	post /user/register(UserRegisterRequest) returns (UserRegisterReply)
 }
 
+/********************************/
+/*		UserLogin			 	*/
+/********************************/
 type UserLoginRequest {
 	Name     string `json:"name"`
 	Password string `json:"password"`
@@ -21,6 +28,9 @@ type UserLoginReply {
 	Token string `json:"token"`
 }
 
+/********************************/
+/*		UserDetail			 	*/
+/********************************/
 type UserDetailRequest {
 	Identity string `json:"identity"`
 }
@@ -30,8 +40,23 @@ type UserDetailReply {
 	Email string `json:"email"`
 }
 
-type MailCodeSendRequest {
+/********************************/
+/*		MailCodeSendRegister 	*/
+/********************************/
+type MailCodeSendRegisterRequest {
 	Email string `json:"email"`
 }
 
-type MailCodeSendReply {}
+type MailCodeSendRegisterReply {}
+
+/********************************/
+/*		UserRegister 			*/
+/********************************/
+type UserRegisterRequest {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+	Email    string `json:"email"`
+	Code     string `json:"code"`
+}
+
+type UserRegisterReply {}
