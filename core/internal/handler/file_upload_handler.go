@@ -30,6 +30,9 @@ func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		// 判断文件是否存在
 		b := make([]byte, fileHeader.Size)
 		_, err = file.Read(b)
+		if err != nil {
+			return
+		}
 		hash := fmt.Sprintf("%x", md5.Sum(b))
 		rp := new(models.RepositoryPool)
 		has, err := svcCtx.Engine.Where("hash = ?", hash).Get(rp)
@@ -37,7 +40,7 @@ func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 		if has {
-			httpx.OkJson(w, &types.FileUploadReply{Identity: rp.Identity})
+			httpx.OkJson(w, &types.FileUploadReply{Identity: rp.Identity, Ext: rp.Ext, Name: rp.Name})
 			return
 		}
 		// 上传文件到COS中
