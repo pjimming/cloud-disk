@@ -29,9 +29,7 @@ service core-api {
 	post /user/repository/save(UserRepositorySaveRequest) returns (UserRepositorySaveReply)
 }
 
-/********************************/
-/*		UserLogin			 	*/
-/********************************/
+// UserLogin
 type UserLoginRequest {
 	Name     string `json:"name"`
 	Password string `json:"password"`
@@ -41,9 +39,7 @@ type UserLoginReply {
 	Token string `json:"token"`
 }
 
-/********************************/
-/*		UserDetail			 	*/
-/********************************/
+// UserDetail
 type UserDetailRequest {
 	Identity string `json:"identity"`
 }
@@ -53,18 +49,14 @@ type UserDetailReply {
 	Email string `json:"email"`
 }
 
-/********************************/
-/*		MailCodeSendRegister 	*/
-/********************************/
+// MailCodeSendRegister
 type MailCodeSendRegisterRequest {
 	Email string `json:"email"`
 }
 
 type MailCodeSendRegisterReply {}
 
-/********************************/
-/*		UserRegister 			*/
-/********************************/
+// UserRegister
 type UserRegisterRequest {
 	Name     string `json:"name"`
 	Password string `json:"password"`
@@ -74,9 +66,7 @@ type UserRegisterRequest {
 
 type UserRegisterReply {}
 
-/********************************/
-/*		FileUpload	 			*/
-/********************************/
+// FileUpload
 type FileUploadRequest {
 	Hash string `json:"hash,optional"`
 	Name string `json:"name,optional"`
@@ -91,9 +81,7 @@ type FileUploadReply {
 	Ext      string `json:"ext"`
 }
 
-/********************************/
-/*		UserRepositorySave		*/
-/********************************/
+// UserRepositorySave
 type UserRepositorySaveRequest {
 	ParentId           int64  `json:"parentId"`
 	RepositoryIdentity string `json:"repositoryIdentity"`
