@@ -31,6 +31,10 @@ service core-api {
 	// 用户文件列表
 	@handler UserFileList
 	post /user/file/list(UserFileListRequest) returns (UserFileListReply)
+	
+	// 用户名称修改
+	@handler UserFileNameUpdate
+	post /user/file/name/update(UserFileNameUpdateRequest) returns (UserFileNameUpdateReply)
 }
 
 // UserLogin
@@ -116,3 +120,11 @@ type UserFile {
 	Path               string `json:"path"`
 	Size               int64  `json:"size"`
 }
+
+// UserFileNameUpdate
+type UserFileNameUpdateRequest {
+	Identity string `json:"identity"`
+	Name     string `json:"name"`
+}
+
+type UserFileNameUpdateReply {}
