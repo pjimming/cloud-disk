@@ -36,3 +36,6 @@ var CosBucket = "https://jimmy-cloud-disk-1304996341.cos.ap-shanghai.myqcloud.co
 
 // 分页默认参数
 var PageSize = 20
+
+// 时间格式化
+var DateTime = "2006-01-02 15:04:05"

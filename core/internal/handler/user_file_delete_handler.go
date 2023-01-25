@@ -6,6 +6,7 @@ import (
 	"cloud-disk/core/internal/logic"
 	"cloud-disk/core/internal/svc"
 	"cloud-disk/core/internal/types"
+
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
@@ -18,7 +19,7 @@ func UserFileDeleteHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewUserFileDeleteLogic(r.Context(), svcCtx)
-		resp, err := l.UserFileDelete(&req)
+		resp, err := l.UserFileDelete(&req, r.Header.Get("UserIdentity"))
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
