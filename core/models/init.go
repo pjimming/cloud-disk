@@ -9,6 +9,7 @@ import (
 	"xorm.io/xorm"
 )
 
+// 生成xorm引擎，调用mysql
 func InitEngine(c config.Config) *xorm.Engine {
 	engine, err := xorm.NewEngine("mysql", c.Mysql.DataSource)
 	if err != nil {
@@ -18,6 +19,7 @@ func InitEngine(c config.Config) *xorm.Engine {
 	return engine
 }
 
+// 初始化redis
 func InitRedis(c config.Config) *redis.Client {
 	return redis.NewClient(&redis.Options{
 		Addr:     c.Redis.Addr,

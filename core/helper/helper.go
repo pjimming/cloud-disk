@@ -35,6 +35,7 @@ func GenerateToken(id int, identity, name string) (string, error) {
 		Identity: identity,
 		Name:     name,
 	}
+	// 利用jwt生成一个token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, uc)
 	tokenString, err := token.SignedString([]byte(define.JwtKey))
 	if err != nil {
@@ -78,7 +79,7 @@ func UUID() string {
 }
 
 // CosUpload
-// 上传文件到腾讯云
+// 上传文件到腾讯云，返回文件路径和error
 func CosUpload(r *http.Request) (string, error) {
 	u, _ := url.Parse(define.CosBucket)
 	b := &cos.BaseURL{BucketURL: u}
@@ -93,7 +94,8 @@ func CosUpload(r *http.Request) (string, error) {
 	if err != nil {
 		panic(err)
 	}
-	key := "test/" + UUID() + path.Ext(fileHeader.Filename)
+
+	key := "test/" + UUID() + path.Ext(fileHeader.Filename) // 文件路径
 
 	_, err = client.Object.Put(
 		context.Background(), key, file, nil,
@@ -114,6 +116,7 @@ func AnalyzeToken(token string) (*define.UserClaim, error) {
 	if err != nil {
 		return nil, err
 	}
+	// claims里面没有值
 	if !claims.Valid {
 		return uc, errors.New("token is invalid")
 	}

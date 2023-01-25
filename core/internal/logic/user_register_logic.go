@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"errors"
-	"log"
 
 	"cloud-disk/core/helper"
 	"cloud-disk/core/internal/svc"
@@ -53,10 +52,9 @@ func (l *UserRegisterLogic) UserRegister(req *types.UserRegisterRequest) (resp *
 		Password: helper.Md5(req.Password),
 		Email:    req.Email,
 	}
-	n, err := l.svcCtx.Engine.Insert(user)
+	_, err = l.svcCtx.Engine.Insert(user)
 	if err != nil {
 		return nil, err
 	}
-	log.Println("insert user row:", n)
 	return
 }

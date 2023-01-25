@@ -26,7 +26,8 @@ func NewFileUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *FileUp
 }
 
 func (l *FileUploadLogic) FileUpload(req *types.FileUploadRequest) (resp *types.FileUploadReply, err error) {
-	rp := &models.RepositoryPool{
+	// 将handler里面处理好的信息存入数据库
+	rp := &models.RepositoryPool{ // 新建rp信息
 		Identity: helper.UUID(),
 		Hash:     req.Hash,
 		Name:     req.Name,
@@ -38,7 +39,7 @@ func (l *FileUploadLogic) FileUpload(req *types.FileUploadRequest) (resp *types.
 	if err != nil {
 		return nil, err
 	}
-
+	// 返回上传超过的信息
 	resp = new(types.FileUploadReply)
 	resp.Identity = rp.Identity
 	resp.Ext = rp.Ext

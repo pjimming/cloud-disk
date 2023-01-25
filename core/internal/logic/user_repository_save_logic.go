@@ -26,7 +26,7 @@ func NewUserRepositorySaveLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 }
 
 func (l *UserRepositorySaveLogic) UserRepositorySave(req *types.UserRepositorySaveRequest, userIdentity string) (resp *types.UserRepositorySaveReply, err error) {
-	ur := &models.UserRepository{
+	ur := &models.UserRepository{ // 新建关联存储
 		Identity:           helper.UUID(),
 		UserIdentity:       userIdentity,
 		ParentId:           req.ParentId,
@@ -34,6 +34,7 @@ func (l *UserRepositorySaveLogic) UserRepositorySave(req *types.UserRepositorySa
 		Ext:                req.Ext,
 		Name:               req.Name,
 	}
+	// 放入数据
 	_, err = l.svcCtx.Engine.Insert(ur)
 	if err != nil {
 		return

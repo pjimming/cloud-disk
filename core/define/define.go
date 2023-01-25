@@ -13,10 +13,11 @@ type UserClaim struct {
 	jwt.StandardClaims
 }
 
+// JwtKey 签名
 var JwtKey = "cloud-disk-key"
 
 // 邮件发送密码
-var MailPassword = "WLGODWPVYNLVMOJM"
+var MailPassword = os.Getenv("MailPassWord_For_panjm2001@126.com")
 
 // 验证码长度
 var CodeLength = 6

@@ -23,23 +23,24 @@ func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
+		// start handle
+		// 判断文件是否存在
 		file, fileHeader, err := r.FormFile("file")
 		if err != nil {
 			return
 		}
-		// 判断文件是否存在
 		b := make([]byte, fileHeader.Size)
-		_, err = file.Read(b)
+		_, err = file.Read(b) // 通过reader写入文件
 		if err != nil {
 			return
 		}
-		hash := fmt.Sprintf("%x", md5.Sum(b))
+		hash := fmt.Sprintf("%x", md5.Sum(b)) // 计算文件的md5值，获取hash值
 		rp := new(models.RepositoryPool)
-		has, err := svcCtx.Engine.Where("hash = ?", hash).Get(rp)
+		has, err := svcCtx.Engine.Where("hash = ?", hash).Get(rp) // 从rp数据库中查找数据
 		if err != nil {
 			return
 		}
-		if has {
+		if has { // 有数据，返回相应信息
 			httpx.OkJson(w, &types.FileUploadReply{Identity: rp.Identity, Ext: rp.Ext, Name: rp.Name})
 			return
 		}
@@ -55,6 +56,7 @@ func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		req.Size = fileHeader.Size
 		req.Path = cosPath
 		req.Hash = hash
+		// end handle
 
 		l := logic.NewFileUploadLogic(r.Context(), svcCtx)
 		resp, err := l.FileUpload(&req)
