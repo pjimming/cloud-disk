@@ -15,9 +15,9 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UserFileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.FileUploadRequest
+		var req types.UserFileUploadRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
@@ -41,7 +41,7 @@ func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 		if has { // 有数据，返回相应信息
-			httpx.OkJson(w, &types.FileUploadReply{Identity: rp.Identity, Ext: rp.Ext, Name: rp.Name})
+			httpx.OkJson(w, &types.UserFileUploadReply{Identity: rp.Identity, Ext: rp.Ext, Name: rp.Name})
 			return
 		}
 		// 上传文件到COS中
@@ -58,8 +58,8 @@ func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		req.Hash = hash
 		// end handle
 
-		l := logic.NewFileUploadLogic(r.Context(), svcCtx)
-		resp, err := l.FileUpload(&req)
+		l := logic.NewUserFileUploadLogic(r.Context(), svcCtx)
+		resp, err := l.UserFileUpload(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

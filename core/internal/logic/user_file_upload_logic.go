@@ -11,21 +11,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type FileUploadLogic struct {
+type UserFileUploadLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewFileUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *FileUploadLogic {
-	return &FileUploadLogic{
+func NewUserFileUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserFileUploadLogic {
+	return &UserFileUploadLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *FileUploadLogic) FileUpload(req *types.FileUploadRequest) (resp *types.FileUploadReply, err error) {
+func (l *UserFileUploadLogic) UserFileUpload(req *types.UserFileUploadRequest) (resp *types.UserFileUploadReply, err error) {
 	// 将handler里面处理好的信息存入数据库
 	rp := &models.RepositoryPool{ // 新建rp信息
 		Identity: helper.UUID(),
@@ -40,7 +40,7 @@ func (l *FileUploadLogic) FileUpload(req *types.FileUploadRequest) (resp *types.
 		return nil, err
 	}
 	// 返回上传超过的信息
-	resp = new(types.FileUploadReply)
+	resp = new(types.UserFileUploadReply)
 	resp.Identity = rp.Identity
 	resp.Ext = rp.Ext
 	resp.Name = rp.Name

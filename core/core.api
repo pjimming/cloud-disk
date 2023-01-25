@@ -21,18 +21,18 @@ service core-api {
 )
 service core-api {
 	// 文件上传
-	@handler FileUpload
-	post /file/upload(FileUploadRequest) returns (FileUploadReply)
+	@handler UserFileUpload
+	post /user/file/upload(UserFileUploadRequest) returns (UserFileUploadReply)
 	
-	// 用户文件的关联存储
+	// 用户-文件关联存储
 	@handler UserRepositorySave
 	post /user/repository/save(UserRepositorySaveRequest) returns (UserRepositorySaveReply)
 	
-	// 用户文件列表
+	// 用户-获取文件列表
 	@handler UserFileList
 	post /user/file/list(UserFileListRequest) returns (UserFileListReply)
 	
-	// 用户名称修改
+	// 用户-文件名称修改
 	@handler UserFileNameUpdate
 	post /user/file/name/update(UserFileNameUpdateRequest) returns (UserFileNameUpdateReply)
 	
@@ -40,9 +40,11 @@ service core-api {
 	@handler UserFolderCreate
 	post /user/folder/create(UserFolderCreateRequest) returns (UserFolderCreateReply)
 	
-	// 用户文件删除
+	// 用户-文件删除
 	@handler UserFileDelete
-	post /user/file/delete(UserFileDeleteRequest) returns (UserFileDeleteReply)
+	delete /user/file/delete(UserFileDeleteRequest) returns (UserFileDeleteReply)
+	
+	// 用户-文件移动
 }
 
 // UserLogin
@@ -82,8 +84,8 @@ type UserRegisterRequest {
 
 type UserRegisterReply {}
 
-// FileUpload
-type FileUploadRequest {
+// UserFileUpload
+type UserFileUploadRequest {
 	Hash string `json:"hash,optional"`
 	Name string `json:"name,optional"`
 	Ext  string `json:"ext,optional"`
@@ -91,7 +93,7 @@ type FileUploadRequest {
 	Path string `json:"path,optional"`
 }
 
-type FileUploadReply {
+type UserFileUploadReply {
 	Identity string `json:"identity"`
 	Name     string `json:"name"`
 	Ext      string `json:"ext"`

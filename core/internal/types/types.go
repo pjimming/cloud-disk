@@ -36,7 +36,7 @@ type UserRegisterRequest struct {
 type UserRegisterReply struct {
 }
 
-type FileUploadRequest struct {
+type UserFileUploadRequest struct {
 	Hash string `json:"hash,optional"`
 	Name string `json:"name,optional"`
 	Ext  string `json:"ext,optional"`
@@ -44,7 +44,7 @@ type FileUploadRequest struct {
 	Path string `json:"path,optional"`
 }
 
-type FileUploadReply struct {
+type UserFileUploadReply struct {
 	Identity string `json:"identity"`
 	Name     string `json:"name"`
 	Ext      string `json:"ext"`
