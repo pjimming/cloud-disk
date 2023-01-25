@@ -33,3 +33,6 @@ var TencentSecretKey = os.Getenv("TencentSecretKey")
 
 // 腾讯云存储桶路径
 var CosBucket = "https://jimmy-cloud-disk-1304996341.cos.ap-shanghai.myqcloud.com/"
+
+// 分页默认参数
+var PageSize = 20
