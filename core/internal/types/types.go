@@ -132,3 +132,12 @@ type ShareBasicDetailReply struct {
 	Path               string `json:"path"`
 	RepositoryIdentity string `json:"repository_identity"`
 }
+
+type ShareBasicSaveRequest struct {
+	Identity string `json:"identity"`
+	ParentId int64  `json:"parent_id"`
+}
+
+type ShareBasicSaveReply struct {
+	Identity string `json:"identity"`
+}
