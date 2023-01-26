@@ -45,6 +45,8 @@ service core-api {
 	delete /user/file/delete(UserFileDeleteRequest) returns (UserFileDeleteReply)
 	
 	// 用户-文件移动
+	@handler UserFileMove
+	put /user/file/move(UserFileMoveRequest) returns (UserFileMoveReply)
 }
 
 // UserLogin
@@ -153,3 +155,11 @@ type UserFileDeleteRequest {
 }
 
 type UserFileDeleteReply {}
+
+// UserFileMove
+type UserFileMoveRequest {
+	ParentIdentity string `json:"parent_identity"`
+	Identity       string `json:"identity"`
+}
+
+type UserFileMoveReply {}
