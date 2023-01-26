@@ -37,11 +37,19 @@ func (l *UserFileNameUpdateLogic) UserFileNameUpdate(req *types.UserFileNameUpda
 		return nil, errors.New("文件名称已存在")
 	}
 
-	// 文件名称修改
+	// 用户存储池文件名称修改
 	data := &models.UserRepository{Name: req.Name}
 	_, err = l.svcCtx.Engine.Where("identity = ? AND user_identity = ?", req.Identity, userIdentity).Update(data)
 	if err != nil {
 		return
 	}
+	// 公共存储池文件名称修改
+	ur := new(models.UserRepository)
+	_, err = l.svcCtx.Engine.Where("identity = ? AND user_identity = ?", req.Identity, userIdentity).Get(ur)
+	if err != nil {
+		return
+	}
+	rp := &models.RepositoryPool{Name: req.Name}
+	_, err = l.svcCtx.Engine.Where("identity = ?", ur.RepositoryIdentity).Update(rp)
 	return
 }
