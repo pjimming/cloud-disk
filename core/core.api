@@ -14,6 +14,10 @@ service core-api {
 	// 用户注册
 	@handler UserRegister
 	post /user/register(UserRegisterRequest) returns (UserRegisterReply)
+	
+	// 获取文件详情
+	@handler ShareBasicDetail
+	post /share/basic/detail(ShareBasicDetailRequest) returns (ShareBasicDetailReply)
 }
 
 @server(
@@ -176,4 +180,17 @@ type ShareBasicCreateRequest {
 
 type ShareBasicCreateReply {
 	Identity string `json:"identity"`
+}
+
+// ShareBasicDetail
+type ShareBasicDetailRequest {
+	Identity string `json:"identity"`
+}
+
+type ShareBasicDetailReply {
+	Name               string `json:"name"`
+	Ext                string `json:"ext"`
+	Size               int64  `json:"size"`
+	Path               string `json:"path"`
+	RepositoryIdentity string `json:"repository_identity"`
 }
