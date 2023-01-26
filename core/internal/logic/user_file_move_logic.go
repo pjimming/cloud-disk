@@ -28,7 +28,7 @@ func NewUserFileMoveLogic(ctx context.Context, svcCtx *svc.ServiceContext) *User
 func (l *UserFileMoveLogic) UserFileMove(req *types.UserFileMoveRequest, userIdentity string) (resp *types.UserFileMoveReply, err error) {
 	// 判断父级文件夹是否存在
 	parentData := new(models.UserRepository)
-	has, err := l.svcCtx.Engine.Where("identity = ? AND user_identity = ?", req.ParentIdentity, userIdentity).Get(parentData)
+	has, err := l.svcCtx.Engine.Where("identity = ? AND user_identity = ?", req.ParentIdentity, userIdentity).Get(parentData) // 寻找要移动到的父级文件夹
 	if err != nil {
 		return
 	}

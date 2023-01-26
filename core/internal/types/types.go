@@ -111,3 +111,12 @@ type UserFileMoveRequest struct {
 
 type UserFileMoveReply struct {
 }
+
+type ShareBasicCreateRequest struct {
+	RepositoryIdentity string `json:"repository_identity"`
+	ExpiredTime        int    `json:"expired_time"`
+}
+
+type ShareBasicCreateReply struct {
+	Identity string `json:"identity"`
+}

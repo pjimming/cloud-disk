@@ -39,7 +39,7 @@ func (l *UserFileUploadLogic) UserFileUpload(req *types.UserFileUploadRequest) (
 	if err != nil {
 		return nil, err
 	}
-	// 返回上传超过的信息
+	// 返回上传成功的信息
 	resp = new(types.UserFileUploadReply)
 	resp.Identity = rp.Identity
 	resp.Ext = rp.Ext
