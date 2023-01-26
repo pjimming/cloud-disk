@@ -59,6 +59,10 @@ service core-api {
 	// 用户-通过分享记录保存资源
 	@handler ShareBasicSave
 	post /share/basic/save(ShareBasicSaveRequest) returns (ShareBasicSaveReply)
+	
+	// 刷新Authorization
+	@handler RefreshAuthorization
+	post /refresh/authorization(RefreshAuthorizationRequest) returns (RefreshAuthorizationReply)
 }
 
 // UserLogin
@@ -68,7 +72,8 @@ type UserLoginRequest {
 }
 
 type UserLoginReply {
-	Token string `json:"token"`
+	Token        string `json:"token"`
+	RefreshToken string `json:"refresh_token"`
 }
 
 // UserDetail
@@ -207,4 +212,12 @@ type ShareBasicSaveRequest {
 
 type ShareBasicSaveReply {
 	Identity string `json:"identity"`
+}
+
+// RefreshAuthorization
+type RefreshAuthorizationRequest {}
+
+type RefreshAuthorizationReply {
+	Token        string `json:"token"`
+	RefreshToken string `json:"refresh_token"`
 }

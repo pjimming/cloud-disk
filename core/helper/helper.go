@@ -28,12 +28,15 @@ func Md5(s string) string {
 
 // GenerateToken
 // 生成Token
-func GenerateToken(id int, identity, name string) (string, error) {
+func GenerateToken(id int, identity, name string, seconds int) (string, error) {
 	// id, identity, name
 	uc := define.UserClaim{
 		Id:       id,
 		Identity: identity,
 		Name:     name,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(time.Second * time.Duration(seconds)).Unix(),
+		},
 	}
 	// 利用jwt生成一个token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, uc)

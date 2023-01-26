@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"cloud-disk/core/define"
 	"cloud-disk/core/helper"
 	"cloud-disk/core/internal/svc"
 	"cloud-disk/core/internal/types"
@@ -37,11 +38,18 @@ func (l *UserLoginLogic) UserLogin(req *types.UserLoginRequest) (resp *types.Use
 		return nil, errors.New("用户名或密码错误！")
 	}
 	// 2. 生成token
-	token, err := helper.GenerateToken(user.Id, user.Identity, user.Name)
+	token, err := helper.GenerateToken(user.Id, user.Identity, user.Name, define.TokenExpireTime)
 	if err != nil {
 		return nil, err
 	}
+	// 3. 生成refreshToken
+	refreshToken, err := helper.GenerateToken(user.Id, user.Identity, user.Name, define.RefreshTokenExpireTime)
+	if err != nil {
+		return nil, err
+	}
+	// 4. 返回结果
 	resp = new(types.UserLoginReply)
 	resp.Token = token
+	resp.RefreshToken = refreshToken
 	return
 }

@@ -39,3 +39,9 @@ var PageSize = 20
 
 // 时间格式化
 var DateTime = "2006-01-02 15:04:05"
+
+// Token过期时间(1 hour)
+var TokenExpireTime = 3600
+
+// RefreshToken过期时间(3 days)
+var RefreshTokenExpireTime = TokenExpireTime * 24 * 3
