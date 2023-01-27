@@ -1,17 +1,21 @@
 package helper
 
 import (
+	"bytes"
 	"cloud-disk/core/define"
 	"context"
 	"crypto/md5"
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"io"
 	"math/rand"
 	"net/http"
 	"net/smtp"
 	"net/url"
 	"path"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -124,4 +128,78 @@ func AnalyzeToken(token string) (*define.UserClaim, error) {
 		return uc, errors.New("token is invalid")
 	}
 	return uc, err
+}
+
+// InitPartUpload
+// 分片上传初始化
+func InitPartUpload(ext string) (string, string, error) {
+	u, _ := url.Parse(define.CosBucket)
+	b := &cos.BaseURL{BucketURL: u}
+	client := cos.NewClient(b, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  define.TencentSecretId,
+			SecretKey: define.TencentSecretKey,
+		},
+	})
+
+	name := "test/" + UUID() + ext
+	v, _, err := client.Object.InitiateMultipartUpload(context.Background(), name, nil)
+	if err != nil {
+		return "", "", err
+	}
+	return name, v.UploadID, nil
+}
+
+// CosPartUpload
+// 上传分片
+func CosPartUpload(r *http.Request) (string, error) {
+	u, _ := url.Parse(define.CosBucket)
+	b := &cos.BaseURL{BucketURL: u}
+	client := cos.NewClient(b, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  define.TencentSecretId,
+			SecretKey: define.TencentSecretKey,
+		},
+	})
+
+	key := r.PostForm.Get("key")
+	uploadId := r.PostForm.Get("upload_id")
+	partNumber, err := strconv.Atoi(r.PostForm.Get("part_number"))
+	if err != nil {
+		return "", err
+	}
+	f, _, err := r.FormFile("file")
+	if err != nil {
+		return "", err
+	}
+	buf := bytes.NewBuffer(nil)
+	io.Copy(buf, f)
+
+	// opt 可选
+	resp, err := client.Object.UploadPart(
+		context.Background(), key, uploadId, partNumber, bytes.NewReader(buf.Bytes()), nil,
+	)
+	if err != nil {
+		return "", err
+	}
+	return strings.Trim(resp.Header.Get("ETag"), "\""), nil
+}
+
+// 完成分片上传
+func FinishPartUpload(key, uploadId string, co []cos.Object) error {
+	u, _ := url.Parse(define.CosBucket)
+	b := &cos.BaseURL{BucketURL: u}
+	client := cos.NewClient(b, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  define.TencentSecretId,
+			SecretKey: define.TencentSecretKey,
+		},
+	})
+
+	opt := &cos.CompleteMultipartUploadOptions{}
+	opt.Parts = append(opt.Parts, co...)
+	_, _, err := client.Object.CompleteMultipartUpload(
+		context.Background(), key, uploadId, opt,
+	)
+	return err
 }

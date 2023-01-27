@@ -67,6 +67,14 @@ service core-api {
 	// 文件上传前的基本信息处理
 	@handler FileUploadPrepare
 	post /file/upload/prepare(FileUploadPrepareRequest) returns (FileUploadPrepareReply)
+	
+	// 文件分片上传
+	@handler FileUploadChunk
+	post /file/upload/chunk(FileUploadChunkRequest) returns (FileUploadChunkReply)
+	
+	// 文件分片上传完成
+	@handler FileUploadChunkFinish
+	post /file/upload/chunk/finish(FileUploadChunkFinishRequest) returns (FileUploadChunkFinishReply)
 }
 
 // UserLogin
@@ -230,9 +238,44 @@ type RefreshAuthorizationReply {
 type FileUploadPrepareRequest {
 	Md5  string `json:"md5"`
 	Name string `json:"name"`
+	Ext  string `json:"ext"`
 }
 
 type FileUploadPrepareReply {
 	Identity string `json:"identity"`
 	UploadId string `json:"upload_id"`
+	Key      string `json:"key"`
+}
+
+// FileUploadChunk
+type FileUploadChunkRequest { // form-data
+	// key
+	// upload_id
+	// file
+	// part_number
+}
+
+type FileUploadChunkReply {
+	Etag string `json:"etag"` // md5
+}
+
+// FileUploadChunkFinish
+type CosObject {
+	PartNumber int    `json:"part_number"`
+	Etag       string `json:"etag"`
+}
+
+type FileUploadChunkFinishRequest {
+	Hash       string      `json:"hash"`
+	Size       int64       `json:"size"`
+	Path       string      `json:"path"`
+	UploadId   string      `json:"upload_id"`
+	Key        string      `json:"key"`
+	CosObjects []CosObject `json:"cos_objects"`
+}
+
+type FileUploadChunkFinishReply {
+	Identity string `json:"identity"`
+	Name     string `json:"name"`
+	Ext      string `json:"ext"`
 }

@@ -154,9 +154,38 @@ type RefreshAuthorizationReply struct {
 type FileUploadPrepareRequest struct {
 	Md5  string `json:"md5"`
 	Name string `json:"name"`
+	Ext  string `json:"ext"`
 }
 
 type FileUploadPrepareReply struct {
 	Identity string `json:"identity"`
 	UploadId string `json:"upload_id"`
+	Key      string `json:"key"`
+}
+
+type FileUploadChunkRequest struct {
+}
+
+type FileUploadChunkReply struct {
+	Etag string `json:"etag"` // md5
+}
+
+type CosObject struct {
+	PartNumber int    `json:"part_number"`
+	Etag       string `json:"etag"`
+}
+
+type FileUploadChunkFinishRequest struct {
+	Hash       string      `json:"hash"`
+	Size       int64       `json:"size"`
+	Path       string      `json:"path"`
+	UploadId   string      `json:"upload_id"`
+	Key        string      `json:"key"`
+	CosObjects []CosObject `json:"cos_objects"`
+}
+
+type FileUploadChunkFinishReply struct {
+	Identity string `json:"identity"`
+	Name     string `json:"name"`
+	Ext      string `json:"ext"`
 }
