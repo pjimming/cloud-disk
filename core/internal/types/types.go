@@ -150,3 +150,13 @@ type RefreshAuthorizationReply struct {
 	Token        string `json:"token"`
 	RefreshToken string `json:"refresh_token"`
 }
+
+type FileUploadPrepareRequest struct {
+	Md5  string `json:"md5"`
+	Name string `json:"name"`
+}
+
+type FileUploadPrepareReply struct {
+	Identity string `json:"identity"`
+	UploadId string `json:"upload_id"`
+}
